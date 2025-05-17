@@ -39,7 +39,7 @@ Node.js 기반의 API Gateway를 통해 요청을 받아 독립적으로 작동�
 ```text
 escrow-service/
 ├── src/
-│   ├── main/java/com/escrow/
+│   ├── main/java/com/goodisgood/escrow/
 │   │   ├── transaction/   ← 거래 도메인
 │   │   ├── settlement/    ← 정산 도메인
 │   │   ├── payment/       ← 결제 도메인
