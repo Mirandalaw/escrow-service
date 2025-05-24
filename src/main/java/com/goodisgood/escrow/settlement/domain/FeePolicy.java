@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 거래 수수료 정책을 정의하는 엔티티
@@ -19,8 +18,8 @@ import java.util.UUID;
 public class FeePolicy {
 
     @Id
-    @GeneratedValue
-    private UUID id; // 수수료 정책 고유 식별자
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // 수수료 정책 고유 식별자
 
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal percentage; // 비율 수수료 (예: 2.50% = 2.50)

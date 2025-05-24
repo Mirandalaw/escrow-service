@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 판매자에게 지급될 정산 정보를 담는 엔티티
@@ -20,15 +19,15 @@ import java.util.UUID;
 public class Settlement {
 
     @Id
-    @GeneratedValue
-    private UUID id;  // 정산 고유 ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;  // 정산 고유 ID
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transaction_id", nullable = false)
     private EscrowTransaction transaction; // 어떤 거래의 정산인지
 
     @Column(nullable = false)
-    private UUID sellerId; // 정산 대상 판매자 ID
+    private Long sellerId; // 정산 대상 판매자 ID (UUID → Long)
 
     @Column(nullable = false)
     private Integer totalAmount; // 총 결제 금액

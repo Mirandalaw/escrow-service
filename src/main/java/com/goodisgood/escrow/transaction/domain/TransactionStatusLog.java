@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 거래 상태 변경 이력을 기록하는 로그 테이블
@@ -19,8 +18,8 @@ import java.util.UUID;
 public class TransactionStatusLog {
 
     @Id
-    @GeneratedValue
-    private UUID id; // 로그 고유 식별자
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // 로그 고유 식별자
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transaction_id", nullable = false)

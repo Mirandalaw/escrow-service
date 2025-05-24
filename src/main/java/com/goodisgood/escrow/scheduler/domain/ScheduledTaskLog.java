@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 시스템 자동 처리 작업(예: 자동 확정, 자동 정산 등)의 실행 결과 로그
@@ -19,11 +18,11 @@ import java.util.UUID;
 public class ScheduledTaskLog {
 
     @Id
-    @GeneratedValue
-    private UUID id;  // 로그 고유 ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // BIGINT + Auto Increment
+    private Long id;  // 로그 고유 ID
 
     @Column(nullable = false)
-    private UUID transactionId; // 대상 거래 ID
+    private Long transactionId; // 대상 거래 ID (UUID → Long)
 
     @Column(nullable = false)
     private String taskType; // 작업 유형 (ex: CONFIRM_AUTO, SETTLE_AUTO, REFUND_AUTO)

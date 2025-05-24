@@ -18,15 +18,15 @@ import java.util.UUID;
 public class Dispute {
 
     @Id
-    @GeneratedValue
-    private UUID id;  // 분쟁 고유 식별자
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment 방식 지정
+    private Long id;  // 분쟁 고유 식별자
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transaction_id", nullable = false)
     private EscrowTransaction transaction; // 분쟁이 발생한 거래
 
     @Column(nullable = false)
-    private UUID reportedBy; // 분쟁 제기자 (buyer 또는 seller의 UUID)
+    private Long reportedBy; // 분쟁 제기자 (buyer 또는 seller의 ID, UUID → Long으로 변경)
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

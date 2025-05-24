@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 판매자의 정산 계좌 정보를 저장하는 엔티티
@@ -18,7 +17,7 @@ import java.util.UUID;
 public class UserAccount {
 
     @Id
-    private UUID userId; // 사용자 고유 ID (판매자 기준)
+    private Long userId; // 사용자 고유 ID (판매자 기준)
 
     @Column(nullable = false)
     private String bankName; // 은행 이름 (예: '카카오뱅크', '국민은행')

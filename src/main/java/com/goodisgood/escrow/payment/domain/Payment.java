@@ -20,15 +20,15 @@ import java.util.UUID;
 public class Payment {
 
     @Id
-    @GeneratedValue
-    private UUID id;  // 결제 레코드 고유 ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;  // 결제 레코드 고유 ID
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transaction_id", nullable = false)
     private EscrowTransaction transaction; // 결제 대상 거래
 
     @Column(nullable = false)
-    private UUID buyerId; // 결제한 사용자 ID
+    private Long buyerId; // 결제한 사용자 ID
 
     @Column(nullable = false)
     private Integer paidAmount; // 실제 결제 금액 (원화 기준)
