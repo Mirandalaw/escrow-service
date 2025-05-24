@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 거래 중 분쟁이 발생했을 때 해당 내역을 기록하고 처리 상태를 관리하는 엔티티
