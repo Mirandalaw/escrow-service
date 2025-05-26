@@ -1,11 +1,17 @@
 package com.goodisgood.escrow.transaction.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+/**
+ * EscrowTransaction
+ * - 거래 정보를 담는 도메인 엔티티
+ */
+@Getter
 @Entity
 @Table(name = "escrow_transactions")
 public class EscrowTransaction {
@@ -40,4 +46,16 @@ public class EscrowTransaction {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt; // 마지막 변경 시각
+
+    protected EscrowTransaction() {
+    }
+
+    public EscrowTransaction(Long buyerId, Long sellerId, Long itemId, Integer amount) {
+        this.buyerId = buyerId;
+        this.sellerId = sellerId;
+        this.itemId = itemId;
+        this.amount = amount;
+        this.status = TransactionStatus.PENDING;
+        this.disputed = false;
+    }
 }
