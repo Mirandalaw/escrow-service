@@ -1,5 +1,7 @@
 package com.goodisgood.escrow.transaction.dto;
 
+import com.goodisgood.escrow.transaction.domain.EscrowTransaction;
+
 import java.time.LocalDateTime;
 
 /**
@@ -12,9 +14,24 @@ public record EscrowTransactionResponse(
         Long sellerId,
         Long itemId,
         Integer amount,
-        String status,            // 거래 상태 (ex: PENDING, PAID, CONFIRMED)
+        String status,
         boolean disputed,
         LocalDateTime expiredAt,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
-) {}
+) {
+    public static EscrowTransactionResponse from(EscrowTransaction tx) {
+        return new EscrowTransactionResponse(
+                tx.getId(),
+                tx.getBuyerId(),
+                tx.getSellerId(),
+                tx.getItemId(),
+                tx.getAmount(),
+                tx.getStatus().name(),
+                tx.isDisputed(),
+                tx.getExpiredAt(),
+                tx.getCreatedAt(),
+                tx.getUpdatedAt()
+        );
+    }
+}
