@@ -2,6 +2,7 @@ package com.goodisgood.escrow.transaction.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -32,6 +33,7 @@ public class EscrowTransaction {
     @Column(nullable = false)
     private Integer amount; // 거래 총 금액 (단위: 원)
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TransactionStatus status; // 거래 상태 (PENDING, PAID 등)
@@ -47,6 +49,10 @@ public class EscrowTransaction {
     @UpdateTimestamp
     private LocalDateTime updatedAt; // 마지막 변경 시각
 
+    public void setUpdatedAtNow(){
+        this.updatedAt = LocalDateTime.now();
+    }
+
     protected EscrowTransaction() {
     }
 
@@ -57,5 +63,29 @@ public class EscrowTransaction {
         this.amount = amount;
         this.status = TransactionStatus.PENDING;
         this.disputed = false;
+    }
+
+    /**
+     * 거래 상태가 target으로 유효하게 변경 가능한지 확인
+     */
+    public boolean canTransitionTo(TransactionStatus target) {
+        return switch (this.status) {
+            case PENDING -> target == TransactionStatus.PAID;
+            case PAID -> target == TransactionStatus.DELIVERED;
+            case DELIVERED -> target == TransactionStatus.CONFIRMED;
+            case CONFIRMED -> target == TransactionStatus.SETTLED;
+            default -> target == TransactionStatus.DISPUTED || target == TransactionStatus.REFUNDED;
+        };
+    }
+
+    /**
+     * 거래 상태를 target으로 변경
+     * 내부에서 유효성 검사 포함
+     */
+    public void updateStatus(TransactionStatus target) {
+        if (!canTransitionTo(target)) {
+            throw new IllegalStateException("잘못된 상태 전이입니다: " + this.status + " → " + target);
+        }
+        this.status = target;
     }
 }

@@ -1,5 +1,6 @@
 package com.goodisgood.escrow.transaction.dto;
 
+import com.goodisgood.escrow.transaction.usecase.command.UpdateTransactionStatusCommand;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -16,4 +17,8 @@ public record TransactionStatusUpdateRequest(
         String changedBy,
 
         String memo
-) {}
+) {
+        public UpdateTransactionStatusCommand toCommand(Long transactionId) {
+                return new UpdateTransactionStatusCommand(transactionId, status, changedBy, memo);
+        }
+}
